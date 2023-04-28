@@ -13,8 +13,9 @@ import (
 func SetupRoutes() {
 
 	// controller-ul care primeste o implementare a interfetei care la randul ei, tot prin constructor function, primeste un struct de tip todolistdb. am ales sa fac asa ca sa pot schimba implementarea interfetei si orice instantare a struct-ului `ToDoListDB`, astfel utilizand dependency injection si loose coupling a diverselor componente din app.
-
-	controller := controllers.NewController(service.NewToDoListService(data.ToDoListDB{}))
+	data := new(data.ToDoListDB)
+	service := service.NewToDoListService(data)
+	controller := controllers.NewController(service)
 
 	r := gin.New()
 
